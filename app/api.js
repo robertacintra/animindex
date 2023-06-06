@@ -9,7 +9,7 @@ export async function getAnimes() {
     return response.data.data;
     }
 
-export async function getAnimeById(id) {
-    const response = await api.get(`/anime/${id}`);
+export async function getAnimeById(anime_id) {
+    const response = await api.get(`/anime/${anime_id}`);
     return response.data.data;
 }
