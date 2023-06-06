@@ -1,3 +1,6 @@
+import "../styles/antd.less";
+import "../styles/globals.less";
+
 export const metadata = {
   title: 'AnimIndex',
   description: 'Next.js - AniminDex by Ro',

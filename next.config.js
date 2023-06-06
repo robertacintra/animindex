@@ -1,22 +1,19 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
-    experimental: {
-        appDir: true,
-    },
-    webpack(config) {
-        config.module.rules.push({
-            test: /\.less$/,
-            use: [
-            'style-loader',
-            'css-loader',
-            {
-                loader: 'less-loader',
-                options: {},
+const withLess = require("next-with-less");
+
+module.exports = withLess({
+    lessLoaderOptions: {
+        loader: 'less-loader',
+        lessOptions: {
+            options: {
+                javascriptEnabled: true,
             },
-            ],
-        });
-    
-        return config;
+        modifyVars: {
+            "primary-color": "#9900FF",
+            "border-radius-base": "2px",
+            /* ... */
+        },
+        },
     },
-};
+});

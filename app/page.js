@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { Card, Row, Col, Modal, Descriptions } from 'antd';
+import { Card, Row, Col } from 'antd';
 import axios from 'axios';
-import Trailer from '../components/Trailer';
-import LoadMoreButton from '../components/LoadMoreButton';
+import LoadMoreButton from '@/components/LoadMoreButton';
+import AnimeModal from '@/components/AnimeModal';
 
 const { Meta } = Card;
 
@@ -25,11 +25,11 @@ const Home = () => {
     const fetchAnimes = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`https://kitsu.io/api/edge/anime?page[limit]=10&page[offset]=${(page - 1) * 10}`);
-            const newAnimes = response.data.data;
-            setAnimes(prevAnimes => [...prevAnimes, ...newAnimes]);
+        const response = await axios.get(`https://kitsu.io/api/edge/anime?page[limit]=10&page[offset]=${(page - 1) * 10}`);
+        const newAnimes = response.data.data;
+        setAnimes(prevAnimes => [...prevAnimes, ...newAnimes]);
         } catch (error) {
-            console.error('Error fetching animes:', error);
+        console.error('Error fetching animes:', error);
         }
         setLoading(false);
     };
@@ -64,46 +64,13 @@ const Home = () => {
 
         {loading && <p>Loading...</p>}
 
-        {!loading && (
-            
-            <LoadMoreButton onClick={handleLoadMore}/>
-            
-        )}
+        {!loading && <LoadMoreButton onClick={handleLoadMore} />}
 
-        <Modal
-            title={selectedAnime ? selectedAnime.attributes.canonicalTitle : ''}
-            visible={modalVisible}
-            onCancel={handleCloseModal}
-            footer={null}
-            width={1000}
-        >
-            {selectedAnime && (
-            <div style={{ display: 'flex' }}>
-                <div style={{ maxWidth: '400px' }}>
-                    <img alt={selectedAnime.attributes.canonicalTitle} src={selectedAnime.attributes.posterImage.medium} />
-                    <p>{selectedAnime.attributes.synopsis}</p>
-                </div>
-
-                <div style={{ paddingLeft: '20px' }}>
-                    <Descriptions title="Anime Details" layout="vertical" bordered>
-                        <Descriptions.Item label="Start Date">{selectedAnime.attributes.startDate}</Descriptions.Item>
-                        <Descriptions.Item label="End Date">{selectedAnime.attributes.endDate}</Descriptions.Item>
-                        <Descriptions.Item label="Episode Count">{selectedAnime.attributes.episodeCount}</Descriptions.Item>
-                        <Descriptions.Item label="Episode Length">{selectedAnime.attributes.episodeLength} minutes</Descriptions.Item>
-                        <Descriptions.Item label="Rating">{selectedAnime.attributes.averageRating}</Descriptions.Item>
-                        <Descriptions.Item label="Age Rating">{selectedAnime.attributes.ageRating}</Descriptions.Item>
-                        <Descriptions.Item label="Popularity Rank">{selectedAnime.attributes.popularityRank}</Descriptions.Item>
-                    </Descriptions>
-                    <div>
-                        Trailer
-                        
-
-                        <Trailer videoId={selectedAnime.attributes.youtubeVideoId} />
-                    </div>
-                </div>
-            </div>
-            )}
-        </Modal>
+        <AnimeModal
+            selectedAnime={selectedAnime}
+            modalVisible={modalVisible}
+            handleCloseModal={handleCloseModal}
+        />
         </div>
     );
 };
