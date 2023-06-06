@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { Card, Row, Col, Button, Modal, Descriptions } from 'antd';
+import { Card, Row, Col, Modal, Descriptions } from 'antd';
 import axios from 'axios';
+import Trailer from '../components/Trailer';
+import LoadMoreButton from '../components/LoadMoreButton';
 
 const { Meta } = Card;
 
@@ -63,9 +65,9 @@ const Home = () => {
         {loading && <p>Loading...</p>}
 
         {!loading && (
-            <div style={{ textAlign: 'center', marginTop: '20px' }}>
-            <Button onClick={handleLoadMore}>Load More</Button>
-            </div>
+            
+            <LoadMoreButton onClick={handleLoadMore}/>
+            
         )}
 
         <Modal
@@ -73,22 +75,32 @@ const Home = () => {
             visible={modalVisible}
             onCancel={handleCloseModal}
             footer={null}
+            width={1000}
         >
             {selectedAnime && (
-            <div>
-                <img alt={selectedAnime.attributes.canonicalTitle} src={selectedAnime.attributes.posterImage.medium} />
-                <Descriptions title="Anime Details" layout="vertical" bordered>
-                    <Descriptions.Item label="Synopsis">{selectedAnime.attributes.synopsis}</Descriptions.Item>
-                    <Descriptions.Item label="Start Date">{selectedAnime.attributes.startDate}</Descriptions.Item>
-                    <Descriptions.Item label="End Date">{selectedAnime.attributes.endDate}</Descriptions.Item>
-                    <Descriptions.Item label="Episode Count">{selectedAnime.attributes.episodeCount}</Descriptions.Item>
-                    <Descriptions.Item label="Episode Length">
-                    {selectedAnime.attributes.episodeLength} minutes
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Rating">{selectedAnime.attributes.averageRating}</Descriptions.Item>
-                    <Descriptions.Item label="Age Rating">{selectedAnime.attributes.ageRating}</Descriptions.Item>
-                    <Descriptions.Item label="Popularity Rank">{selectedAnime.attributes.popularityRank}</Descriptions.Item>
-                </Descriptions>
+            <div style={{ display: 'flex' }}>
+                <div style={{ maxWidth: '400px' }}>
+                    <img alt={selectedAnime.attributes.canonicalTitle} src={selectedAnime.attributes.posterImage.medium} />
+                    <p>{selectedAnime.attributes.synopsis}</p>
+                </div>
+
+                <div style={{ paddingLeft: '20px' }}>
+                    <Descriptions title="Anime Details" layout="vertical" bordered>
+                        <Descriptions.Item label="Start Date">{selectedAnime.attributes.startDate}</Descriptions.Item>
+                        <Descriptions.Item label="End Date">{selectedAnime.attributes.endDate}</Descriptions.Item>
+                        <Descriptions.Item label="Episode Count">{selectedAnime.attributes.episodeCount}</Descriptions.Item>
+                        <Descriptions.Item label="Episode Length">{selectedAnime.attributes.episodeLength} minutes</Descriptions.Item>
+                        <Descriptions.Item label="Rating">{selectedAnime.attributes.averageRating}</Descriptions.Item>
+                        <Descriptions.Item label="Age Rating">{selectedAnime.attributes.ageRating}</Descriptions.Item>
+                        <Descriptions.Item label="Popularity Rank">{selectedAnime.attributes.popularityRank}</Descriptions.Item>
+                    </Descriptions>
+                    <div>
+                        Trailer
+                        
+
+                        <Trailer videoId={selectedAnime.attributes.youtubeVideoId} />
+                    </div>
+                </div>
             </div>
             )}
         </Modal>
