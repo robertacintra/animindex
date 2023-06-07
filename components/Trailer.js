@@ -3,10 +3,10 @@ import YouTube from 'react-youtube';
 
 const Trailer = ({ videoId }) => {
     const opts = {
-        height: '315',
-        width: '560',
+        width:"100%",
+        height:"100%",
         playerVars: {
-        autoplay: 1,
+        autoplay: -1,
         },
     };
 
@@ -16,7 +16,7 @@ const Trailer = ({ videoId }) => {
 
     return (
         <div>
-        <YouTube videoId={videoId} opts={opts} onReady={onReady} />
+            <YouTube videoId={videoId} opts={opts} onReady={onReady} />
         </div>
     );
 };

@@ -46,7 +46,7 @@ const Home = () => {
 
     return (
         <div style={{ padding: '20px' }}>
-        <h1>Anime Catalogue</h1>
+        <h1 style={{ fontFamily: 'Roboto, sans-serif'}}>Anime Catalogue</h1>
         <Row gutter={[16, 16]}>
             {animes.map((anime) => (
             <Col key={anime.id} xs={24} sm={12} md={8} lg={6} xl={4}>
