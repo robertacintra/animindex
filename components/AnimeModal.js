@@ -4,11 +4,12 @@ import Trailer from './Trailer';
 const AnimeModal = ({ selectedAnime, modalVisible, handleCloseModal }) => {
     return (
         <Modal
-        title={selectedAnime ? selectedAnime.attributes.canonicalTitle : ''}
-        open={modalVisible}
-        onCancel={handleCloseModal}
-        footer={null}
-        width={1000}
+            title={selectedAnime ? selectedAnime.attributes.canonicalTitle : ''}
+            open={modalVisible}
+            onCancel={handleCloseModal}
+            footer={null}
+            width={1000}
+            className='modalAnime'
         >
         {selectedAnime && (
             <div style={{ display: 'flex' }}>
